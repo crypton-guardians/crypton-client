@@ -1,12 +1,12 @@
 import apiClient from "services/apiClient";
 
 //로그인 api
-export const login = async (params: object) => {
+export const login = async (params: object) => {    
     try{
         const response = await apiClient.post('/login', params);
         return response.data;
     }catch (error){
-        throw "에러 : "+error
+        console.log(error)
     }
 }
 
@@ -16,6 +16,6 @@ export const signup = async (params: object) => {
         const response = await apiClient.post('/signup', params);
         return response.data;
     }catch (error){
-        throw "에러 : "+error
+        console.log(error)
     }
 }
