@@ -8,7 +8,7 @@ export default function LandingPage() {
   return (
     <>
       <S.Header>
-        <S.Logo src="/logo.png" alt="Logo" />
+        <S.Logo src="/logo-basic.png" alt="Logo" />
       </S.Header>
       <S.LandingContainer>
         <S.Title>
