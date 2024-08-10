@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@emotion/types": "^0.7.0",
@@ -16,7 +17,11 @@
     "@types/react-router-dom": "^5.3.3",
     "antd": "^5.20.0",
     "axios": "^1.7.3",
+<<<<<<< HEAD
     "global": "^4.4.0",
+=======
+    "emotion-reset": "^3.0.1",
+>>>>>>> develop
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",

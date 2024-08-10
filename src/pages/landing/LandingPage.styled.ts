@@ -37,3 +37,16 @@ export const SubTitle = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
 `;
+
+export const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 800px;
+`;
+
+export const FooterItem = styled.div`
+  padding: 30px;
+`;
