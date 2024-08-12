@@ -24,6 +24,12 @@ const CardContainer = styled.div`
     border-radius: 12px;
     color: ${theme.colors.black[300]};
     background-color: ${theme.colors.black[850]};
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${theme.colors.black[800]};
+    }
   `}
 `;
 

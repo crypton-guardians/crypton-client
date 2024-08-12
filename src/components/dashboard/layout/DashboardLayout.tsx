@@ -1,3 +1,4 @@
+// DashboardLayout.tsx
 import * as S from './DashboardLayout.styled';
 import { useState } from 'react';
 import SearchInput from '../SearchInput';
@@ -7,6 +8,7 @@ import { FaFolderOpen, FaTrashAlt } from 'react-icons/fa';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { IoIosWarning } from 'react-icons/io';
 import RecentFileCard from '../RecentFileCard';
+import FileList from '../fileList/FileList';
 
 export default function DashboardLayout() {
   const [activeTab, setActiveTab] = useState('home');
@@ -24,10 +26,20 @@ export default function DashboardLayout() {
               <RecentFileCard title="7-8시즌 현황 공개" preview="/images/sample3.png" />
             </S.RecentFilesSection>
             <S.TabContent>파일 목록</S.TabContent>
+            <S.TableContainer>
+              <FileList />
+            </S.TableContainer>
           </>
         );
       case 'myFiles':
-        return <S.TabContent>파일 목록</S.TabContent>;
+        return (
+          <>
+            <S.TabContent>파일 목록</S.TabContent>
+            <S.TableContainer>
+              <FileList />
+            </S.TableContainer>
+          </>
+        );
       case 'sharedFiles':
         return <S.TabContent>공유된 파일 내용</S.TabContent>;
       case 'trash':
@@ -56,13 +68,11 @@ export default function DashboardLayout() {
           휴지통
         </S.SidebarTab>
       </S.Sidebar>
-      <div style={{ flexGrow: 1 }}>
+      <S.MainContainer>
         <S.Header>
           <SearchInput placeholder="검색어를 입력하세요." />
           <UploadButton />
         </S.Header>
-
-        {/* NOTE: 임시데이터, API 연동 예정 */}
         <S.WarningInfo>
           <div>
             <div className="warning-title">
@@ -75,7 +85,7 @@ export default function DashboardLayout() {
           </div>
         </S.WarningInfo>
         <S.Content>{renderContent()}</S.Content>
-      </div>
+      </S.MainContainer>
     </S.Layout>
   );
 }

@@ -75,8 +75,8 @@ export const SignupButton = styled.div`
     border: 1.5px solid white;
     background-color: transparent;
     color: white;
-    cursor: pointer;
     transition: all 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
