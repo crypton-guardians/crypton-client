@@ -18,7 +18,7 @@ export default function LoginPage() {
         console.log("res :::", response)        
         if(response.status === 200){
           console.log("로그인 성공")
-          navigate('/main')
+          navigate('/dashboard')
         }
       }catch(error){
         console.log("error :::", error)

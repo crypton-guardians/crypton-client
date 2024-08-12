@@ -22,8 +22,8 @@ export default function SignupPage() {
         }else{          
           const response = await signup(userInfo);          
           if(response.status === 200){            
-            alert("회원가입 성공! 로그인을 진행해주세요.")
-            navigate('/login')
+            alert("회원가입 성공!")
+            navigate('/dashboard')
           }else{
             setUserInfo({username:"", password:""})
             alert("회원 가입 실패!")   

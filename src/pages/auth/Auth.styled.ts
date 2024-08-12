@@ -3,8 +3,8 @@ import { css } from '@emotion/react';
 
 export const PageContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   padding: 20px;
@@ -28,12 +28,12 @@ export const ContentsContainer = styled.div`
 export const Logo = styled.img`
   width: 170px;
   height: auto;
-  margin: 26px;
+  margin: 30px;
 `;
 
 export const TextBox = styled.div`
   ${({ theme }) => css`
-    ${theme.typography.bodyM}
+    ${theme.typography.body1M}
   `}
   color: white;
   margin-bottom: 26px;
@@ -41,7 +41,7 @@ export const TextBox = styled.div`
 
 export const LinkTextBox = styled.div`
   ${({ theme }) => css`
-    ${theme.typography.bodyB}
+    ${theme.typography.body1B}
     color: ${theme.colors.key[400]};
   `}
   margin: 0px 0px 26px 16px;
@@ -51,7 +51,7 @@ export const LinkTextBox = styled.div`
 export const CustomInput = styled.input`
   ${({ theme }) => css`
     color: ${theme.colors.black[500]};
-    border: 1.5px solid ${theme.colors.black[500]};
+    border: 1.3px solid ${theme.colors.black[500]};
     ${theme.typography.loginInput}
 
     &::placeholder {
@@ -79,14 +79,14 @@ export const CustomInput = styled.input`
 export const AuthButton = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.black[100]};
-    ${theme.typography.bodyS}
+    ${theme.typography.body1S}
     &:hover {
-      background-color: ${theme.colors.black[200]};
+      background-color: ${theme.colors.black[300]};
     }
   `}
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 80%;
   height: 54px;
   margin-top: 10px;
