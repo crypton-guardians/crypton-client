@@ -2,6 +2,15 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+export default function UploadButton() {
+  return (
+    <Button>
+      <AiOutlinePlus />
+      PDF 업로드
+    </Button>
+  );
+}
+
 const Button = styled.button`
   ${({ theme }) => css`
     display: flex;
@@ -28,12 +37,3 @@ const Button = styled.button`
   `}
   cursor: pointer;
 `;
-
-export default function UploadButton() {
-  return (
-    <Button>
-      <AiOutlinePlus />
-      PDF 업로드
-    </Button>
-  );
-}

@@ -5,6 +5,8 @@ import UploadButton from '../button/UploadButton';
 import { AiFillHome } from 'react-icons/ai';
 import { FaFolderOpen, FaTrashAlt } from 'react-icons/fa';
 import { BsFillPeopleFill } from 'react-icons/bs';
+import { IoIosWarning } from 'react-icons/io';
+import RecentFileCard from '../RecentFileCard';
 
 export default function DashboardLayout() {
   const [activeTab, setActiveTab] = useState('home');
@@ -12,9 +14,20 @@ export default function DashboardLayout() {
   const renderContent = () => {
     switch (activeTab) {
       case 'home':
-        return <S.TabContent>홈 내용</S.TabContent>;
+        return (
+          // NOTE: 임시데이터, API 연동 예정
+          <>
+            <S.RecentFilesSection>
+              <RecentFileCard title="챌린지 모집공고" preview="/images/sample1.png" />
+              <RecentFileCard title="AI 서비스 정보 구조도" preview="/images/sample2.png" />
+              <RecentFileCard title="7-8시즌 현황 공개" preview="/images/sample3.png" />
+              <RecentFileCard title="7-8시즌 현황 공개" preview="/images/sample3.png" />
+            </S.RecentFilesSection>
+            <S.TabContent>파일 목록</S.TabContent>
+          </>
+        );
       case 'myFiles':
-        return <S.TabContent>내 파일 내용</S.TabContent>;
+        return <S.TabContent>파일 목록</S.TabContent>;
       case 'sharedFiles':
         return <S.TabContent>공유된 파일 내용</S.TabContent>;
       case 'trash':
@@ -48,6 +61,19 @@ export default function DashboardLayout() {
           <SearchInput placeholder="검색어를 입력하세요." />
           <UploadButton />
         </S.Header>
+
+        {/* NOTE: 임시데이터, API 연동 예정 */}
+        <S.WarningInfo>
+          <div>
+            <div className="warning-title">
+              <IoIosWarning size={24} />
+              최근 발생한 보안 탈취 의심건 : 4건
+            </div>
+            <div className="warning-description">
+              허용되지 않은 접근이 있는 파일을 클릭하여 상세정보를 확인해보세요.
+            </div>
+          </div>
+        </S.WarningInfo>
         <S.Content>{renderContent()}</S.Content>
       </div>
     </S.Layout>
