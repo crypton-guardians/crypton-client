@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
+import PdfIcon from 'components/common/button/PdfIcon';
 
 export default function FileList() {
   return (
@@ -18,7 +19,7 @@ export default function FileList() {
         {dataSource.map((file) => (
           <TableRow key={file.key}>
             <TableCell>
-              <PdfIcon src="/pdf-icon.png" alt="pdf" />
+              <PdfIcon width="26px" height="26px" />
               {file.name}
             </TableCell>
             <TableCell>{file.date}</TableCell>
@@ -104,11 +105,4 @@ const TableCell = styled.div`
       fill: ${theme.colors.black[500]};
     }
   `}
-`;
-
-const PdfIcon = styled.img`
-  width: 26px;
-  height: 26px;
-  margin-right: 16px;
-  background-size: cover;
 `;

@@ -1,11 +1,17 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import PdfIcon from 'components/common/button/PdfIcon';
+
+interface FileCardProps {
+  title: string;
+  preview: string;
+}
 
 export default function FileCard({ title, preview }: FileCardProps) {
   return (
     <CardContainer>
       <FileHeader>
-        <PdfIcon src="/pdf-icon.png" alt="pdf" />
+        <PdfIcon marginRight="12px" />
         <FileTitle>{title}</FileTitle>
       </FileHeader>
       <FilePreview src={preview} alt={title} />
@@ -39,13 +45,6 @@ const FileHeader = styled.div`
   margin-bottom: 16px;
 `;
 
-const PdfIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  background-size: cover;
-`;
-
 const FileTitle = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -60,8 +59,3 @@ const FilePreview = styled.img`
   margin-bottom: 8px;
   background-size: cover;
 `;
-
-interface FileCardProps {
-  title: string;
-  preview: string;
-}
