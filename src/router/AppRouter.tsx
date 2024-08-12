@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from 'components/common/layout/Layout';
+import DashboardLayout from 'components/common/layout/DashboardLayout';
 import * as P from 'pages';
 
 export default function AppRouter() {
@@ -13,8 +13,8 @@ export default function AppRouter() {
         <Route path="*" element={<P.NotFoundPage />} />
 
         {/* Layout이 필요한 페이지 */}
-        <Route element={<Layout />}>
-          <Route path="/main" element={<P.MainPage />} />
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<P.DashboardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

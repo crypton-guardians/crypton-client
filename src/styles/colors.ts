@@ -19,6 +19,11 @@ const colors = {
     100: '#D6D5FF',
     50: '#E8E8FF',
   },
+  gradient: {
+    keyGradient: 'linear-gradient(89.99deg, #5A57FF -14.57%, #1E1B99 99.99%)',
+    keyGradient50: 'linear-gradient(89.99deg, rgba(90, 87, 255, 0.5) -14.57%, rgba(30, 27, 153, 0.5) 99.99%)',
+    keyGradientHover: 'linear-gradient(89.99deg, #4845D6 -14.57%, #17157F 99.99%)',
+  },
 };
 
 export default colors;

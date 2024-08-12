@@ -1,4 +1,4 @@
-import * as S from './MainPage.styled';
+import * as S from './DashboardPage.styled';
 
 export default function MainPage() {
   return (
