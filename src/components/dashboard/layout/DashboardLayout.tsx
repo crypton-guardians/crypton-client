@@ -1,7 +1,7 @@
 import * as S from './DashboardLayout.styled';
 import { useState } from 'react';
-import SearchInput from '../input/SearchInput';
-import UploadButton from '../button/UploadButton';
+import SearchInput from '../SearchInput';
+import UploadButton from '../UploadButton';
 import { AiFillHome } from 'react-icons/ai';
 import { FaFolderOpen, FaTrashAlt } from 'react-icons/fa';
 import { BsFillPeopleFill } from 'react-icons/bs';
