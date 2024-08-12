@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import DashboardLayout from 'components/common/layout/DashboardLayout';
+import DashboardLayout from 'components/dashboard/layout/DashboardLayout';
 import * as P from 'pages';
 
 export default function AppRouter() {
