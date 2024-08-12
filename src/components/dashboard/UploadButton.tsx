@@ -79,7 +79,7 @@ const Button = styled.button`
     border-radius: 14px;
     color: ${theme.colors.key[100]};
     ${theme.typography.uploadBtn}
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
     background: ${theme.colors.gradient.keyGradient};
 
     &:hover {
