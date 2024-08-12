@@ -59,8 +59,17 @@ const TableBody = styled.div`
 
 const TableRow = styled.div`
   display: contents;
+
   &:hover {
-    background-color: ${({ theme }) => theme.colors.black[800]};
+    div {
+      background-color: ${({ theme }) => theme.colors.black[850]};
+    }
+  }
+
+  &:active {
+    div {
+      background: ${({ theme }) => theme.colors.key[800]};
+    }
   }
 `;
 
@@ -88,14 +97,6 @@ const TableCell = styled.div`
     color: ${theme.colors.black[400]};
     border-bottom: 1px solid ${theme.colors.black[700]};
     cursor: pointer;
-
-    /* &:hover {
-      background-color: ${theme.colors.black[850]};
-    }
-
-    &:active {
-      background: ${theme.colors.gradient.keyGradient50};
-    } */
 
     svg {
       width: 16px;
