@@ -1,3 +1,4 @@
+// DashboardLayout.styled.ts
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
@@ -31,13 +32,14 @@ export const SidebarTab = styled.div<{ active?: boolean }>`
     align-items: center;
     justify-content: flex-start;
     width: 90%;
-    height: 67px;
+    height: 60px;
     padding: 10px 30px;
     border-radius: 50px 0px 0px 50px;
     ${theme.typography.body1M}
     color: ${active ? theme.colors.black[50] : theme.colors.black[500]};
     background: ${active ? theme.colors.gradient.keyGradient50 : 'transparent'};
     cursor: pointer;
+    transition: all 0.3s ease;
 
     svg {
       margin-right: 16px;
@@ -64,12 +66,11 @@ export const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: calc(100% - 330px);
-    height: 90px;
+    width: calc(100% - 320px);
+    height: 150px;
     padding: 20px;
-    margin: 40px 20px 30px 20px;
     background-color: ${theme.colors.black[900]};
-    z-index: 1;
+    z-index: 10; // 고정된 요소 중 가장 위에 위치하도록 설정
   `}
 `;
 
@@ -77,14 +78,14 @@ export const Header = styled.div`
 export const WarningInfo = styled.div`
   ${({ theme }) => css`
     position: sticky;
-    top: 150px;
+    top: 120px;
+    width: 100%;
+    height: 100px;
     display: flex;
     align-items: center;
-    padding: 16px 20px;
-    margin: 10px 0px 8px 16px;
-    color: ${theme.colors.black[300]};
+    padding: 40px 30px 20px 50px;
     background-color: ${theme.colors.black[900]};
-    z-index: 2;
+    z-index: 9; // Header 아래, 다른 스크롤 요소 위에 위치하도록 설정
 
     svg {
       margin-right: 12px;
@@ -109,33 +110,43 @@ export const WarningInfo = styled.div`
 
 // 최근 본 파일 목록 (기본 4개 렌더링))
 export const RecentFilesSection = styled.div`
-  ${({ theme }) => css`
-    position: sticky;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin: 0px 10px 0px -6px;
-    /* top: calc(150px + 16px); */
-    z-index: 1;
-  `}
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+  z-index: 8; // WarningInfo 아래에 위치하도록 설정
 `;
 
 // 컨텐츠 영역 스타일
 export const Content = styled.div`
   ${({ theme }) => css`
     flex-grow: 1;
-    padding: 150px 20px 20px 20px;
-    overflow-y: auto;
+    padding: 140px 20px 10px 20px;
     background-color: ${theme.colors.black[900]};
   `}
 `;
 
 export const TabContent = styled.div`
   ${({ theme }) => css`
+    position: sticky;
+    top: 220px;
+    height: 60px;
     padding: 20px;
     ${theme.typography.heading1};
     color: ${theme.colors.black[300]};
     background-color: ${theme.colors.black[900]};
+    z-index: 7;
+  `}
+`;
+
+export const MainContainer = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
+`;
+
+export const TableContainer = styled.div`
+  ${({ theme }) => css`
+    background-color: ${theme.colors.black[900]};
+    overflow-y: auto;
   `}
 `;
 
