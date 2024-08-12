@@ -65,9 +65,9 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-around;
     width: calc(100% - 330px);
-    height: 80px;
+    height: 90px;
     padding: 20px;
-    margin: 45px 20px 30px 20px;
+    margin: 40px 20px 30px 20px;
     background-color: ${theme.colors.black[900]};
     z-index: 1;
   `}
@@ -81,7 +81,7 @@ export const WarningInfo = styled.div`
     display: flex;
     align-items: center;
     padding: 16px 20px;
-    margin: 10px 0px 20px 16px;
+    margin: 10px 0px 8px 16px;
     color: ${theme.colors.black[300]};
     background-color: ${theme.colors.black[900]};
     z-index: 2;
@@ -109,10 +109,15 @@ export const WarningInfo = styled.div`
 
 // 최근 본 파일 목록 (기본 4개 렌더링))
 export const RecentFilesSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  margin: 0px 10px 0px -6px;
+  ${({ theme }) => css`
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 0px 10px 0px -6px;
+    /* top: calc(150px + 16px); */
+    z-index: 1;
+  `}
 `;
 
 // 컨텐츠 영역 스타일
@@ -128,9 +133,8 @@ export const Content = styled.div`
 export const TabContent = styled.div`
   ${({ theme }) => css`
     padding: 20px;
-    color: white;
-    border-radius: 10px;
-    ${theme.typography.body1M}
+    ${theme.typography.heading1};
+    color: ${theme.colors.black[300]};
     background-color: ${theme.colors.black[900]};
   `}
 `;

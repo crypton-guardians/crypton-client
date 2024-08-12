@@ -7,6 +7,7 @@ import { FaFolderOpen, FaTrashAlt } from 'react-icons/fa';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { IoIosWarning } from 'react-icons/io';
 import RecentFileCard from '../RecentFileCard';
+import FileList from '../FileList';
 
 export default function DashboardLayout() {
   const [activeTab, setActiveTab] = useState('home');
@@ -24,6 +25,7 @@ export default function DashboardLayout() {
               <RecentFileCard title="7-8시즌 현황 공개" preview="/images/sample3.png" />
             </S.RecentFilesSection>
             <S.TabContent>파일 목록</S.TabContent>
+            <FileList />
           </>
         );
       case 'myFiles':
