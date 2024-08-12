@@ -1,13 +1,33 @@
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 export default function UploadButton() {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // NOTE: 파일 처리 로직을 추가 예정
+      console.log('Selected file:', file);
+    }
+  };
+
   return (
-    <Button>
-      <AiOutlinePlus />
-      PDF 업로드
-    </Button>
+    <>
+      <Button onClick={handleButtonClick}>
+        <AiOutlinePlus />
+        PDF 업로드
+      </Button>
+      <HiddenFileInput ref={fileInputRef} type="file" accept=".pdf" onChange={handleFileChange} />
+    </>
   );
 }
 
@@ -36,4 +56,8 @@ const Button = styled.button`
     }
   `}
   cursor: pointer;
+`;
+
+const HiddenFileInput = styled.input`
+  display: none;
 `;
