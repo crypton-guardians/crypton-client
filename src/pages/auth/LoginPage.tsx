@@ -14,10 +14,10 @@ export default function LoginPage() {
   //로그인 핸들러
   const handleLogin = async () => {      
       try{
-        const response = await login(loginParams);
-        console.log("res :::", response)        
+        const response = await login(loginParams);            
         if(response.status === 200){
           console.log("로그인 성공")
+          response.data.data && sessionStorage.setItem("userId", response.data.data)
           navigate('/dashboard')
         }
       }catch(error){

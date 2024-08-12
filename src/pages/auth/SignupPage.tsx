@@ -20,9 +20,10 @@ export default function SignupPage() {
           alert("아이디가 중복입니다. 다시 입력해주세요.")
           setUserInfo({username:"", password:""})
         }else{          
-          const response = await signup(userInfo);          
+          const response = await signup(userInfo);                    
           if(response.status === 200){            
-            alert("회원가입 성공!")
+            alert("회원가입 성공!")            
+            response.data.data && sessionStorage.setItem("userId", response.data.data)
             navigate('/dashboard')
           }else{
             setUserInfo({username:"", password:""})
