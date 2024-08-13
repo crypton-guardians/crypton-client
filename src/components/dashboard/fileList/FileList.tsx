@@ -1,38 +1,56 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
+import PreviewModal from '../PreviewModal';
 import PdfIcon from 'components/common/button/PdfIcon';
 
 export default function FileList() {
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+
+  const handleRowClick = (fileName: string) => {
+    setSelectedFileName(fileName);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedFileName(null);
+  };
+
   return (
-    <TableContainer>
-      <TableHeader>
-        <HeaderCell>이름</HeaderCell>
-        <HeaderCell>열람 날짜</HeaderCell>
-        <HeaderCell>파일 크기</HeaderCell>
-        <HeaderCell>소유자</HeaderCell>
-        <HeaderCell></HeaderCell>
-        <HeaderCell></HeaderCell>
-      </TableHeader>
-      <TableBody>
-        {dataSource.map((file) => (
-          <TableRow key={file.key}>
-            <TableCell>
-              <PdfIcon width="26px" height="26px" />
-              {file.name}
-            </TableCell>
-            <TableCell>{file.date}</TableCell>
-            <TableCell>{file.size}</TableCell>
-            <TableCell>{file.owner}</TableCell>
-            <TableCell></TableCell>
-            <TableCell>
-              <FaEllipsisH />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </TableContainer>
+    <>
+      <TableContainer>
+        <TableHeader>
+          <HeaderCell>이름</HeaderCell>
+          <HeaderCell>열람 날짜</HeaderCell>
+          <HeaderCell>파일 크기</HeaderCell>
+          <HeaderCell>소유자</HeaderCell>
+          <HeaderCell></HeaderCell>
+          <HeaderCell></HeaderCell>
+        </TableHeader>
+        <TableBody>
+          {dataSource.map((file) => (
+            <TableRow key={file.key} onClick={() => handleRowClick(file.name)}>
+              <TableCell>
+                <PdfIcon width="26px" height="26px" />
+                {file.name}
+              </TableCell>
+              <TableCell>{file.date}</TableCell>
+              <TableCell>{file.size}</TableCell>
+              <TableCell>{file.owner}</TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <FaEllipsisH />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+
+      {selectedFileName && (
+        <PreviewModal isOpen={!!selectedFileName} onClose={handleCloseModal} fileName={selectedFileName} />
+      )}
+    </>
   );
 }
 
