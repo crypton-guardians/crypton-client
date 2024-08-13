@@ -4,11 +4,14 @@ import styled from '@emotion/styled';
 import ModalLayout from 'components/common/modal/ModalLayout';
 import PdfIcon from 'components/common/button/PdfIcon';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { securityReport } from 'services/dashboard/dashboardApi';
 
 interface SecurityReportModalProps {
   isOpen: boolean;
   onClose: () => void;
   fileName: string;
+  fileId : string;
   accessRecords: Array<{
     userName: string;
     accessStatus: string;
@@ -17,7 +20,42 @@ interface SecurityReportModalProps {
   }>;
 }
 
-export default function SecurityReportModal({ isOpen, onClose, fileName, accessRecords }: SecurityReportModalProps) {
+
+export default function SecurityReportModal({ isOpen, onClose, fileName, fileId, accessRecords  }: SecurityReportModalProps) {
+  const [reportList, setReportList] = useState({
+      viewers:[],
+      fileReadCount:0,
+      fileTheftCount:0,
+      updateAuthKey:false
+  })
+
+  function formatDate(date: Date) {
+    return new Date(date).toLocaleString('sv-SE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).replace(',', '');
+  }  
+
+  useEffect(() => {
+    const fetchData = async () => {
+    try{
+      const response = await securityReport(fileId)        
+      if(response.status === 200){
+        setReportList(response.data.data)        
+      }
+    }catch(error){
+      console.log("error :::", error)
+    }} 
+
+    fetchData();
+  },[fileId])
+
+  console.log("reportList :::",reportList)
+
   return (
     <>
       {isOpen && (
@@ -35,19 +73,21 @@ export default function SecurityReportModal({ isOpen, onClose, fileName, accessR
             <HeaderCell>접속 시간</HeaderCell>
           </TableHeader>
           <ContentsBox>
-            {accessRecords.map((record, index) => (
+            
+            {reportList.viewers.length > 0 && 
+              reportList.viewers.map((record:{name:"", date:Date}, index) => (
               <RecordItem key={index}>
                 <RecordInfo>
-                  <UserName>{record.userName}</UserName>
-                  {record.accessStatus && (
+                  <UserName>{record.name}</UserName>   
+                  {(
                     <AccessStatus>
-                      <FaExclamationTriangle />
-                      {record.accessStatus}
-                    </AccessStatus>
-                  )}
+                    <FaExclamationTriangle />
+                    {"허용되지 않은 사용자"}
+                    </AccessStatus>  
+                  )}                           
                 </RecordInfo>
-                <DeviceInfo>{record.device}</DeviceInfo>
-                <TimeInfo>{record.accessTime}</TimeInfo>
+                <DeviceInfo>{"window os"}</DeviceInfo>
+                <TimeInfo>{formatDate(record.date)}</TimeInfo>
               </RecordItem>
             ))}
           </ContentsBox>

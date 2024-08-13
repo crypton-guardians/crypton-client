@@ -183,6 +183,7 @@ export default function FileList() {
           isOpen={showSecurityReportModal}
           onClose={handleSecurityReportClose}
           fileName={selectedFile.name}
+          fileId={selectedFile.key}          
           accessRecords={[
             {
               userName: 'qwer12341',
