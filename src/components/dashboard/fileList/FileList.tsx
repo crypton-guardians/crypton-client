@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
 import PdfIcon from 'components/common/button/PdfIcon';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
+import ActionMenuToggle from '../ActionMenuToggle';
 
 interface File {
   key: string;
@@ -16,16 +17,49 @@ interface File {
   owner: string;
 }
 
+interface MenuState {
+  isOpen: boolean;
+  selectedRowKey: string | null;
+}
+
+type MenuAction = { type: 'TOGGLE'; key: string } | { type: 'CLOSE' };
+
+function menuReducer(state: MenuState, action: MenuAction): MenuState {
+  switch (action.type) {
+    case 'TOGGLE':
+      return { isOpen: !state.isOpen, selectedRowKey: action.key };
+    case 'CLOSE':
+      return { isOpen: false, selectedRowKey: null };
+    default:
+      return state;
+  }
+}
+
 export default function FileList() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
+  // 메뉴 상태 관리
+  const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
+
   const handleRowClick = (file: File) => {
-    setSelectedFile(file);
+    if (!menuState.isOpen) {
+      setSelectedFile(file);
+    }
+  };
+
+  const handleMenuToggle = (event: React.MouseEvent, key: string) => {
+    event.stopPropagation();
+    dispatchMenu({ type: 'TOGGLE', key });
+  };
+
+  const handleMenuClose = () => {
+    dispatchMenu({ type: 'CLOSE' });
   };
 
   const handleClosePreviewInfoModal = () => {
     setShowPreview(true);
+    handleMenuClose();
   };
 
   const handleFullScreenClose = () => {
@@ -46,7 +80,10 @@ export default function FileList() {
         </TableHeader>
         <TableBody>
           {dataSource.map((file) => (
-            <TableRow key={file.key} onClick={() => handleRowClick(file)}>
+            <TableRow
+              key={file.key}
+              onClick={() => handleRowClick(file)}
+              isMenuOpen={menuState.isOpen && menuState.selectedRowKey === file.key}>
               <TableCell>
                 <PdfIcon width="26px" height="26px" />
                 {file.name}
@@ -55,8 +92,13 @@ export default function FileList() {
               <TableCell>{file.size}</TableCell>
               <TableCell>{file.owner}</TableCell>
               <TableCell></TableCell>
-              <TableCell>
-                <FaEllipsisH />
+              <TableCell onClick={(event) => handleMenuToggle(event, file.key)}>
+                <EllipsisContainer>
+                  <FaEllipsisH />
+                  {menuState.isOpen && menuState.selectedRowKey === file.key && (
+                    <ActionMenuToggle isOpen={menuState.isOpen} onClose={handleMenuClose} />
+                  )}
+                </EllipsisContainer>
               </TableCell>
             </TableRow>
           ))}
@@ -89,6 +131,10 @@ export default function FileList() {
   );
 }
 
+const EllipsisContainer = styled.div`
+  position: relative;
+`;
+
 const TableContainer = styled.div`
   width: 100%;
   height: auto;
@@ -111,12 +157,12 @@ const TableBody = styled.div`
   grid-template-columns: 10fr 2fr 2fr 2fr 2fr 2fr;
 `;
 
-const TableRow = styled.div`
+const TableRow = styled.div<{ isMenuOpen: boolean }>`
   display: contents;
 
   &:hover {
     div {
-      background-color: ${({ theme }) => theme.colors.black[850]};
+      background-color: ${({ theme, isMenuOpen }) => !isMenuOpen && theme.colors.black[850]};
     }
   }
 
