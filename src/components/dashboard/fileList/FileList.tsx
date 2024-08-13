@@ -1,20 +1,36 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
+import { useState } from 'react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
-import PreviewModal from '../PreviewModal';
 import PdfIcon from 'components/common/button/PdfIcon';
+import PreviewInfoModal from '../PreviewInfoModal';
+import FullScreenPreview from '../FullScreenPreview';
+
+interface File {
+  key: string;
+  name: string;
+  date: string;
+  size: string;
+  owner: string;
+}
 
 export default function FileList() {
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
 
-  const handleRowClick = (fileName: string) => {
-    setSelectedFileName(fileName);
+  const handleRowClick = (file: File) => {
+    setSelectedFile(file);
   };
 
-  const handleCloseModal = () => {
-    setSelectedFileName(null);
+  const handleClosePreviewInfoModal = () => {
+    setShowPreview(true);
+  };
+
+  const handleFullScreenClose = () => {
+    setSelectedFile(null);
+    setShowPreview(false);
   };
 
   return (
@@ -30,7 +46,7 @@ export default function FileList() {
         </TableHeader>
         <TableBody>
           {dataSource.map((file) => (
-            <TableRow key={file.key} onClick={() => handleRowClick(file.name)}>
+            <TableRow key={file.key} onClick={() => handleRowClick(file)}>
               <TableCell>
                 <PdfIcon width="26px" height="26px" />
                 {file.name}
@@ -47,8 +63,27 @@ export default function FileList() {
         </TableBody>
       </TableContainer>
 
-      {selectedFileName && (
-        <PreviewModal isOpen={!!selectedFileName} onClose={handleCloseModal} fileName={selectedFileName} />
+      {selectedFile && !showPreview && (
+        <PreviewInfoModal
+          isOpen={!!selectedFile}
+          onClose={handleClosePreviewInfoModal}
+          fileName={selectedFile.name}
+          fileDate={selectedFile.date}
+          fileSize={selectedFile.size}
+          fileOwner={selectedFile.owner}
+          onPreviewStart={handleClosePreviewInfoModal}
+        />
+      )}
+
+      {showPreview && selectedFile && (
+        <FullScreenPreview
+          isOpen={showPreview}
+          onClose={handleFullScreenClose}
+          fileName={selectedFile.name}
+          fileDate={selectedFile.date}
+          fileSize={selectedFile.size}
+          fileOwner={selectedFile.owner}
+        />
       )}
     </>
   );
