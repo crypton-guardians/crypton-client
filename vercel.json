@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "http://www.crython.shop:8080/api/$1"
-    }
-  ]
-}
