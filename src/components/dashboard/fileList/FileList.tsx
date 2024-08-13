@@ -7,6 +7,7 @@ import { FaEllipsisH } from 'react-icons/fa';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
 import ShareManagementModal from '../ShareManagementModal';
+import SecurityReportModal from '../SecurityReportModal';
 import ActionMenuToggle from '../ActionMenuToggle';
 import PdfIcon from 'components/common/button/PdfIcon';
 
@@ -41,6 +42,7 @@ export default function FileList() {
   const [showPreview, setShowPreview] = useState(false);
   const [showPreviewInfoModal, setShowPreviewInfoModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showSecurityReportModal, setShowSecurityReportModal] = useState(false);
 
   // 메뉴 상태 관리
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
@@ -90,6 +92,16 @@ export default function FileList() {
     setShowShareModal(false);
   };
 
+  const handleSecurityReportOpen = (file: File) => {
+    setSelectedFile(file);
+    setShowSecurityReportModal(true);
+    handleMenuClose();
+  };
+
+  const handleSecurityReportClose = () => {
+    setShowSecurityReportModal(false);
+  };
+
   return (
     <>
       <TableContainer>
@@ -124,6 +136,7 @@ export default function FileList() {
                       onClose={handleMenuClose}
                       onFilePreview={() => handleFilePreview(file)}
                       onShare={() => handleShareOpen(file)}
+                      onSecurityReport={() => handleSecurityReportOpen(file)}
                     />
                   )}
                 </EllipsisContainer>
@@ -162,6 +175,34 @@ export default function FileList() {
           onClose={handleShareClose}
           fileName={selectedFile.name}
           fileOwners={['User 123', 'User 12323']} // NOTE: 파일 소유자 리스트 (임시 데이터)
+        />
+      )}
+
+      {showSecurityReportModal && selectedFile && (
+        <SecurityReportModal
+          isOpen={showSecurityReportModal}
+          onClose={handleSecurityReportClose}
+          fileName={selectedFile.name}
+          accessRecords={[
+            {
+              userName: 'qwer12341',
+              accessStatus: '허용되지 않은 사용자',
+              device: 'Mac OS',
+              accessTime: '2024-08-12 15:30:45',
+            },
+            {
+              userName: 'user868',
+              accessStatus: '',
+              device: 'Mac OS',
+              accessTime: '2024-08-12 15:30:45',
+            },
+            {
+              userName: 'user19999',
+              accessStatus: '허용되지 않은 사용자',
+              device: 'Android',
+              accessTime: '2024-08-12 15:30:45',
+            },
+          ]} // NOTE: 임시 데이터입니다.
         />
       )}
     </>

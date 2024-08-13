@@ -10,9 +10,16 @@ interface ActionMenuProps {
   onClose: () => void;
   onFilePreview: () => void;
   onShare: () => void;
+  onSecurityReport: () => void;
 }
 
-export default function ActionMenuToggle({ isOpen, onClose, onFilePreview, onShare }: ActionMenuProps) {
+export default function ActionMenuToggle({
+  isOpen,
+  onClose,
+  onFilePreview,
+  onShare,
+  onSecurityReport,
+}: ActionMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +62,7 @@ export default function ActionMenuToggle({ isOpen, onClose, onFilePreview, onSha
         <BsFillPersonPlusFill />
         다른 사람과 공유하기
       </MenuItem>
-      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
+      <MenuItem className="action-menu-item" onClick={onSecurityReport}>
         <FaInfoCircle />
         개별 문서 보안리포트 확인
       </MenuItem>
