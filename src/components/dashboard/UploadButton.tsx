@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-
-// import axios from 'axios';
 import apiClient from 'services/apiClient';
 import { useRef } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -22,7 +20,7 @@ export default function UploadButton() {
     if (file) {
       // 확장자 체크
       if (file.type !== 'application/pdf') {
-        alert('PDF 파일만 업로드할 수 있습니다.'); // NOTE: GUI 없어서 일단 alert 처리, 추후 toast로 일괄 변경
+        alert('PDF 파일만 업로드할 수 있습니다.');
         return;
       }
 
@@ -36,7 +34,15 @@ export default function UploadButton() {
       try {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('uploadUserId', 'aaa'); // 업로드 사용자 ID를 실제 사용자 ID로 대체
+
+        // sessionStorage에서 사용자 ID 가져오기
+        const uploadUserId = sessionStorage.getItem('userId');
+        if (uploadUserId) {
+          formData.append('uploadUserId', uploadUserId);
+        } else {
+          console.error('업로드 사용자 ID가 없습니다.');
+          return;
+        }
 
         const response = await apiClient.post(`/document/upload`, formData, {
           headers: {
