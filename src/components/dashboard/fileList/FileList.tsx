@@ -38,6 +38,7 @@ function menuReducer(state: MenuState, action: MenuAction): MenuState {
 export default function FileList() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [showPreviewInfoModal, setShowPreviewInfoModal] = useState(false);
 
   // 메뉴 상태 관리
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
@@ -45,6 +46,7 @@ export default function FileList() {
   const handleRowClick = (file: File) => {
     if (!menuState.isOpen) {
       setSelectedFile(file);
+      setShowPreviewInfoModal(true);
     }
   };
 
@@ -58,8 +60,13 @@ export default function FileList() {
   };
 
   const handleClosePreviewInfoModal = () => {
+    setShowPreviewInfoModal(false);
+  };
+
+  const handlePreviewStart = () => {
+    // 추가
     setShowPreview(true);
-    handleMenuClose();
+    setShowPreviewInfoModal(false);
   };
 
   const handleFullScreenClose = () => {
@@ -105,15 +112,15 @@ export default function FileList() {
         </TableBody>
       </TableContainer>
 
-      {selectedFile && !showPreview && (
+      {selectedFile && showPreviewInfoModal && (
         <PreviewInfoModal
-          isOpen={!!selectedFile}
+          isOpen={showPreviewInfoModal}
           onClose={handleClosePreviewInfoModal}
           fileName={selectedFile.name}
           fileDate={selectedFile.date}
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
-          onPreviewStart={handleClosePreviewInfoModal}
+          onPreviewStart={handlePreviewStart}
         />
       )}
 
