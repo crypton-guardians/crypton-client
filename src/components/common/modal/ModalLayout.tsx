@@ -27,7 +27,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +46,7 @@ const ModalContent = styled.div`
   ${({ theme }) => css`
     position: relative;
     width: 800px;
-    padding: 30px 30px 50px 30px;
+    padding: 30px;
     max-width: 90%;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
