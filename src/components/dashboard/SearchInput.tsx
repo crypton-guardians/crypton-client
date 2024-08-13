@@ -19,8 +19,8 @@ const Input = styled.input`
     background-color: ${theme.colors.black[800]};
 
     &::placeholder {
-      color: ${theme.colors.black[500]};
       ${theme.typography.body2R};
+      color: ${theme.colors.black[500]};
     }
 
     &:focus {

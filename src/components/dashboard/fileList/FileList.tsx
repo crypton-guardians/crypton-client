@@ -6,6 +6,7 @@ import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
+import ShareManagementModal from '../ShareManagementModal';
 import ActionMenuToggle from '../ActionMenuToggle';
 import PdfIcon from 'components/common/button/PdfIcon';
 
@@ -39,6 +40,7 @@ export default function FileList() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [showPreviewInfoModal, setShowPreviewInfoModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   // 메뉴 상태 관리
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
@@ -78,6 +80,16 @@ export default function FileList() {
     setShowPreview(false);
   };
 
+  const handleShareOpen = (file: File) => {
+    setSelectedFile(file);
+    setShowShareModal(true);
+    handleMenuClose();
+  };
+
+  const handleShareClose = () => {
+    setShowShareModal(false);
+  };
+
   return (
     <>
       <TableContainer>
@@ -111,6 +123,7 @@ export default function FileList() {
                       isOpen={menuState.isOpen}
                       onClose={handleMenuClose}
                       onFilePreview={() => handleFilePreview(file)}
+                      onShare={() => handleShareOpen(file)}
                     />
                   )}
                 </EllipsisContainer>
@@ -140,6 +153,15 @@ export default function FileList() {
           fileDate={selectedFile.date}
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
+        />
+      )}
+
+      {showShareModal && selectedFile && (
+        <ShareManagementModal
+          isOpen={showShareModal}
+          onClose={handleShareClose}
+          fileName={selectedFile.name}
+          fileOwners={['User 123', 'User 12323']} // NOTE: 파일 소유자 리스트 (임시 데이터)
         />
       )}
     </>

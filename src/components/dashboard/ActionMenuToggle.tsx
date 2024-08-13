@@ -9,9 +9,10 @@ interface ActionMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onFilePreview: () => void;
+  onShare: () => void;
 }
 
-export default function ActionMenuToggle({ isOpen, onClose, onFilePreview }: ActionMenuProps) {
+export default function ActionMenuToggle({ isOpen, onClose, onFilePreview, onShare }: ActionMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function ActionMenuToggle({ isOpen, onClose, onFilePreview }: Act
         <BsDownload />
         파일 다운로드하기
       </MenuItem>
-      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
+      <MenuItem className="action-menu-item" onClick={onShare}>
         <BsFillPersonPlusFill />
         다른 사람과 공유하기
       </MenuItem>
