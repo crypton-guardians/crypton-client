@@ -1,37 +1,91 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
+import { useState } from 'react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
+import PdfIcon from 'components/common/button/PdfIcon';
+import PreviewInfoModal from '../PreviewInfoModal';
+import FullScreenPreview from '../FullScreenPreview';
+
+interface File {
+  key: string;
+  name: string;
+  date: string;
+  size: string;
+  owner: string;
+}
 
 export default function FileList() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handleRowClick = (file: File) => {
+    setSelectedFile(file);
+  };
+
+  const handleClosePreviewInfoModal = () => {
+    setShowPreview(true);
+  };
+
+  const handleFullScreenClose = () => {
+    setSelectedFile(null);
+    setShowPreview(false);
+  };
+
   return (
-    <TableContainer>
-      <TableHeader>
-        <HeaderCell>이름</HeaderCell>
-        <HeaderCell>열람 날짜</HeaderCell>
-        <HeaderCell>파일 크기</HeaderCell>
-        <HeaderCell>소유자</HeaderCell>
-        <HeaderCell></HeaderCell>
-        <HeaderCell></HeaderCell>
-      </TableHeader>
-      <TableBody>
-        {dataSource.map((file) => (
-          <TableRow key={file.key}>
-            <TableCell>
-              <PdfIcon src="/pdf-icon.png" alt="pdf" />
-              {file.name}
-            </TableCell>
-            <TableCell>{file.date}</TableCell>
-            <TableCell>{file.size}</TableCell>
-            <TableCell>{file.owner}</TableCell>
-            <TableCell></TableCell>
-            <TableCell>
-              <FaEllipsisH />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </TableContainer>
+    <>
+      <TableContainer>
+        <TableHeader>
+          <HeaderCell>이름</HeaderCell>
+          <HeaderCell>열람 날짜</HeaderCell>
+          <HeaderCell>파일 크기</HeaderCell>
+          <HeaderCell>소유자</HeaderCell>
+          <HeaderCell></HeaderCell>
+          <HeaderCell></HeaderCell>
+        </TableHeader>
+        <TableBody>
+          {dataSource.map((file) => (
+            <TableRow key={file.key} onClick={() => handleRowClick(file)}>
+              <TableCell>
+                <PdfIcon width="26px" height="26px" />
+                {file.name}
+              </TableCell>
+              <TableCell>{file.date}</TableCell>
+              <TableCell>{file.size}</TableCell>
+              <TableCell>{file.owner}</TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <FaEllipsisH />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+
+      {selectedFile && !showPreview && (
+        <PreviewInfoModal
+          isOpen={!!selectedFile}
+          onClose={handleClosePreviewInfoModal}
+          fileName={selectedFile.name}
+          fileDate={selectedFile.date}
+          fileSize={selectedFile.size}
+          fileOwner={selectedFile.owner}
+          onPreviewStart={handleClosePreviewInfoModal}
+        />
+      )}
+
+      {showPreview && selectedFile && (
+        <FullScreenPreview
+          isOpen={showPreview}
+          onClose={handleFullScreenClose}
+          fileName={selectedFile.name}
+          fileDate={selectedFile.date}
+          fileSize={selectedFile.size}
+          fileOwner={selectedFile.owner}
+        />
+      )}
+    </>
   );
 }
 
@@ -104,11 +158,4 @@ const TableCell = styled.div`
       fill: ${theme.colors.black[500]};
     }
   `}
-`;
-
-const PdfIcon = styled.img`
-  width: 26px;
-  height: 26px;
-  margin-right: 16px;
-  background-size: cover;
 `;
