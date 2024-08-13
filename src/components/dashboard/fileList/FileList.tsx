@@ -4,10 +4,10 @@ import { css } from '@emotion/react';
 import { useState, useReducer } from 'react';
 import { dataSource } from './FileListdataSource';
 import { FaEllipsisH } from 'react-icons/fa';
-import PdfIcon from 'components/common/button/PdfIcon';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
 import ActionMenuToggle from '../ActionMenuToggle';
+import PdfIcon from 'components/common/button/PdfIcon';
 
 interface File {
   key: string;
@@ -63,8 +63,12 @@ export default function FileList() {
     setShowPreviewInfoModal(false);
   };
 
+  const handleFilePreview = (file: File) => {
+    setSelectedFile(file);
+    setShowPreviewInfoModal(true);
+  };
+
   const handlePreviewStart = () => {
-    // 추가
     setShowPreview(true);
     setShowPreviewInfoModal(false);
   };
@@ -103,7 +107,11 @@ export default function FileList() {
                 <EllipsisContainer>
                   <FaEllipsisH />
                   {menuState.isOpen && menuState.selectedRowKey === file.key && (
-                    <ActionMenuToggle isOpen={menuState.isOpen} onClose={handleMenuClose} />
+                    <ActionMenuToggle
+                      isOpen={menuState.isOpen}
+                      onClose={handleMenuClose}
+                      onFilePreview={() => handleFilePreview(file)}
+                    />
                   )}
                 </EllipsisContainer>
               </TableCell>
@@ -174,7 +182,7 @@ const TableRow = styled.div<{ isMenuOpen: boolean }>`
   }
 
   &:active {
-    div {
+    div:not(.action-menu-item) {
       background: ${({ theme }) => theme.colors.key[800]};
     }
   }

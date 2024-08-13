@@ -8,9 +8,10 @@ import { FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
 interface ActionMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onFilePreview: () => void;
 }
 
-export default function ActionMenuToggle({ isOpen, onClose }: ActionMenuProps) {
+export default function ActionMenuToggle({ isOpen, onClose, onFilePreview }: ActionMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,23 +32,33 @@ export default function ActionMenuToggle({ isOpen, onClose }: ActionMenuProps) {
     };
   }, [isOpen, onClose]);
 
+  const handleDownload = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onFilePreview();
+    onClose();
+  };
+
+  const handleMenuItemClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   if (!isOpen) return null;
 
   return (
-    <MenuContainer ref={menuRef}>
-      <MenuItem>
+    <MenuContainer className="action-menu-item" ref={menuRef} onClick={handleMenuItemClick}>
+      <MenuItem className="action-menu-item" onClick={handleDownload}>
         <BsDownload />
         파일 다운로드하기
       </MenuItem>
-      <MenuItem>
+      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
         <BsFillPersonPlusFill />
         다른 사람과 공유하기
       </MenuItem>
-      <MenuItem>
+      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
         <FaInfoCircle />
         개별 문서 보안리포트 확인
       </MenuItem>
-      <MenuItem>
+      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
         <FaTrashAlt />
         삭제하기
       </MenuItem>
@@ -92,4 +103,7 @@ const MenuItem = styled.div`
       border-bottom: 1px solid ${theme.colors.black[700]};
     }
   `}
+
+  &.action-menu-item {
+  }
 `;
