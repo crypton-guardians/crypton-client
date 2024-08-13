@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-//로그인 및 회원가입 관련 api 연동 컴포넌트
-
 const apiClient = axios.create({
   baseURL: 'http://www.crython.shop:8080/api',
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+// 인터셉터 추가
+apiClient.interceptors.request.use((request) => {
+  console.log('Starting Request', request.url);
+  return request;
 });
 
 export default apiClient;
