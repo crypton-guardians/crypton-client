@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import axios from 'axios';
+// import axios from 'axios';
+import apiClient from 'services/apiClient';
 import { useRef } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
@@ -35,9 +36,9 @@ export default function UploadButton() {
       try {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('uploadUserId', '12345'); // 업로드 사용자 ID를 실제 사용자 ID로 대체
+        formData.append('uploadUserId', 'aaa'); // 업로드 사용자 ID를 실제 사용자 ID로 대체
 
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/document/upload`, formData, {
+        const response = await apiClient.post(`/document/upload`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
