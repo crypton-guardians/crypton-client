@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://www.crython.shop:8080/api',
+  baseURL: 'http://www.crython.shop:8080/api',
   headers: {
     'Content-Type': 'application/json',
   },
