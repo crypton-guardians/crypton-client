@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
 import apiClient from 'services/apiClient';
 import { useRef } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -38,10 +39,10 @@ export default function UploadButton() {
         // sessionStorage에서 사용자 ID 가져오기
         const uploadUserId = sessionStorage.getItem('userId');
         if (uploadUserId) {
-          formData.append('uploadUserId', uploadUserId);
+          // uploadUserId를 Long 타입으로 변환 후 추가
+          formData.append('uploadUserId', String(uploadUserId));
         } else {
-          console.error('업로드 사용자 ID가 없습니다.');
-          return;
+          throw new Error('사용자 ID를 찾을 수 없습니다.');
         }
 
         const response = await apiClient.post(`/document/upload`, formData, {
@@ -50,16 +51,13 @@ export default function UploadButton() {
           },
         });
 
-        if (response.data.success) {
+        if (response.status === 200) {
           console.log('파일 업로드 성공:', response.data.message);
-          // NOTE: 업로드 성공 시 추가 처리 로직 (알림 또는 UI 업데이트)
         } else {
           console.error('파일 업로드 실패:', response.data.message);
-          // NOTE: 업로드 실패 시 처리 로직 (오류 메시지 표시)
         }
       } catch (error) {
         console.error('파일 업로드 중 오류 발생:', error);
-        // NOTE: 네트워크 오류 등 예외 처리
       }
     }
   };
