@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import { useState, useReducer } from 'react';
-import { dataSource } from './FileListdataSource';
+import { useState, useReducer, useEffect } from 'react';
+import apiClient from 'services/apiClient';
 import { FaEllipsisH } from 'react-icons/fa';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
@@ -44,8 +44,42 @@ export default function FileList() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSecurityReportModal, setShowSecurityReportModal] = useState(false);
 
+  const [fileList, setFileList] = useState<File[]>([]);
+
   // 메뉴 상태 관리
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
+
+  useEffect(() => {
+    const fetchFileList = async () => {
+      try {
+        const userId = sessionStorage.getItem('userId');
+        if (!userId) {
+          throw new Error('사용자 ID를 찾을 수 없습니다.');
+        }
+
+        const response = await apiClient.get(`/document/list`, {
+          params: { userId },
+        });
+
+        if (response.data.success) {
+          const formattedFiles = response.data.data.map((file: any, index: number) => ({
+            key: String(index), // 임시로 key 생성
+            name: file.fileName,
+            date: file.createdAt,
+            size: file.fileSize,
+            owner: file.uploadUser,
+          }));
+          setFileList(formattedFiles);
+        } else {
+          console.error('파일 리스트를 가져오는데 실패했습니다:', response.data.message);
+        }
+      } catch (error) {
+        console.error('파일 리스트를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchFileList();
+  }, []);
 
   const handleRowClick = (file: File) => {
     if (!menuState.isOpen) {
@@ -114,7 +148,7 @@ export default function FileList() {
           <HeaderCell></HeaderCell>
         </TableHeader>
         <TableBody>
-          {dataSource.map((file) => (
+          {fileList.map((file) => (
             <TableRow
               key={file.key}
               onClick={() => handleRowClick(file)}
@@ -183,7 +217,7 @@ export default function FileList() {
           isOpen={showSecurityReportModal}
           onClose={handleSecurityReportClose}
           fileName={selectedFile.name}
-          fileId={selectedFile.key}          
+          fileId={selectedFile.key}
           accessRecords={[
             {
               userName: 'qwer12341',
