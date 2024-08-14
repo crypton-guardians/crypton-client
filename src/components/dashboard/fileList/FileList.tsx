@@ -10,6 +10,7 @@ import ShareManagementModal from '../ShareManagementModal';
 import SecurityReportModal from '../SecurityReportModal';
 import ActionMenuToggle from '../ActionMenuToggle';
 import PdfIcon from 'components/common/button/PdfIcon';
+import { formatDateToYYMMDD } from 'utils/dateUtils';
 
 interface File {
   key: string;
@@ -65,7 +66,7 @@ export default function FileList() {
           const formattedFiles = response.data.data.map((file: any, index: number) => ({
             key: String(index), // 임시로 key 생성
             name: file.fileName,
-            date: file.createdAt,
+            date: formatDateToYYMMDD(file.createdAt),
             size: file.fileSize,
             owner: file.uploadUser,
           }));
