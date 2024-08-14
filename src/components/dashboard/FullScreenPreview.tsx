@@ -22,6 +22,9 @@ export default function FullScreenPreview({
 }: FullScreenPreviewProps) {
   if (!isOpen) return null;
 
+  // NOTE: fileId를 주는 api가 없음, 임시데이터
+  const fileId = 'example12345';
+
   return (
     <FullScreenOverlay onClick={onClose}>
       <PreviewHeader>
@@ -34,7 +37,7 @@ export default function FullScreenPreview({
           <span>{fileSize}</span>
           <span>{fileOwner}</span>
         </AdditionalInfo>
-        <DownloadButton />
+        <DownloadButton fileId={fileId} />
       </PreviewHeader>
       <PreviewContent>
         <TextBox>미리보기 화면</TextBox>
