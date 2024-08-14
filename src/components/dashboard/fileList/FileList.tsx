@@ -3,14 +3,15 @@ import { css } from '@emotion/react';
 
 import { useState, useReducer, useEffect } from 'react';
 import apiClient from 'services/apiClient';
-import { FaEllipsisH } from 'react-icons/fa';
 import PreviewInfoModal from '../PreviewInfoModal';
 import FullScreenPreview from '../FullScreenPreview';
 import ShareManagementModal from '../ShareManagementModal';
 import SecurityReportModal from '../SecurityReportModal';
+import FileDeleteConfirmModal from '../FileDeleteConfirmModal';
 import ActionMenuToggle from '../ActionMenuToggle';
 import PdfIcon from 'components/common/button/PdfIcon';
 import { formatDateToYYMMDD } from 'utils/dateUtils';
+import { FaEllipsisH } from 'react-icons/fa';
 
 interface File {
   key: string;
@@ -44,41 +45,42 @@ export default function FileList() {
   const [showPreviewInfoModal, setShowPreviewInfoModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSecurityReportModal, setShowSecurityReportModal] = useState(false);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
 
   const [fileList, setFileList] = useState<File[]>([]);
 
   // 메뉴 상태 관리
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
 
-  useEffect(() => {
-    const fetchFileList = async () => {
-      try {
-        const userId = sessionStorage.getItem('userId');
-        if (!userId) {
-          throw new Error('사용자 ID를 찾을 수 없습니다.');
-        }
-
-        const response = await apiClient.get(`/document/list`, {
-          params: { userId },
-        });
-
-        if (response.data.success) {
-          const formattedFiles = response.data.data.map((file: any, index: number) => ({
-            key: String(index), // 임시로 key 생성
-            name: file.fileName,
-            date: formatDateToYYMMDD(file.createdAt),
-            size: file.fileSize,
-            owner: file.uploadUser,
-          }));
-          setFileList(formattedFiles);
-        } else {
-          console.error('파일 리스트를 가져오는데 실패했습니다:', response.data.message);
-        }
-      } catch (error) {
-        console.error('파일 리스트를 가져오는 중 오류 발생:', error);
+  const fetchFileList = async () => {
+    try {
+      const userId = sessionStorage.getItem('userId');
+      if (!userId) {
+        throw new Error('사용자 ID를 찾을 수 없습니다.');
       }
-    };
 
+      const response = await apiClient.get(`/document/list`, {
+        params: { userId },
+      });
+
+      if (response.data.success) {
+        const formattedFiles = response.data.data.map((file: any, index: number) => ({
+          key: String(index), // 임시로 key 생성
+          name: file.fileName,
+          date: formatDateToYYMMDD(file.createdAt),
+          size: file.fileSize,
+          owner: file.uploadUser,
+        }));
+        setFileList(formattedFiles);
+      } else {
+        console.error('파일 리스트를 가져오는데 실패했습니다:', response.data.message);
+      }
+    } catch (error) {
+      console.error('파일 리스트를 가져오는 중 오류 발생:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchFileList();
   }, []);
 
@@ -137,6 +139,21 @@ export default function FileList() {
     setShowSecurityReportModal(false);
   };
 
+  const handleDeleteOpen = (file: File) => {
+    setSelectedFile(file);
+    setShowDeleteConfirmModal(true);
+    handleMenuClose();
+  };
+
+  const handleDeleteClose = () => {
+    setShowDeleteConfirmModal(false);
+  };
+
+  const handleDeleteSuccess = () => {
+    setShowDeleteConfirmModal(false);
+    fetchFileList(); // 파일 리스트 갱신
+  };
+
   return (
     <>
       <TableContainer>
@@ -172,6 +189,7 @@ export default function FileList() {
                       onFilePreview={() => handleFilePreview(file)}
                       onShare={() => handleShareOpen(file)}
                       onSecurityReport={() => handleSecurityReportOpen(file)}
+                      onDelete={() => handleDeleteOpen(file)}
                     />
                   )}
                 </EllipsisContainer>
@@ -239,6 +257,16 @@ export default function FileList() {
               accessTime: '2024-08-12 15:30:45',
             },
           ]} // NOTE: 임시 데이터입니다.
+        />
+      )}
+
+      {selectedFile && showDeleteConfirmModal && (
+        <FileDeleteConfirmModal
+          isOpen={showDeleteConfirmModal}
+          onClose={handleDeleteClose}
+          fileName={selectedFile.name}
+          fileId={selectedFile.key}
+          onDeleteSuccess={handleDeleteSuccess}
         />
       )}
     </>

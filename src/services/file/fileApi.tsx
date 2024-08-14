@@ -60,3 +60,14 @@ export const fileDownload = async (documentId: number) => {
     throw error;
   }
 };
+
+// 파일 삭제 API
+export const deleteFile = async (fileId: string) => {
+  try {
+    const response = await apiClient.delete(`/document/${fileId}/delete`);
+    return response.data;
+  } catch (error) {
+    console.error('파일 삭제 중 오류 발생:', error);
+    throw error;
+  }
+};

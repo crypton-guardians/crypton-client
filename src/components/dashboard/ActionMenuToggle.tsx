@@ -11,6 +11,7 @@ interface ActionMenuProps {
   onFilePreview: () => void;
   onShare: () => void;
   onSecurityReport: () => void;
+  onDelete: () => void;
 }
 
 export default function ActionMenuToggle({
@@ -19,6 +20,7 @@ export default function ActionMenuToggle({
   onFilePreview,
   onShare,
   onSecurityReport,
+  onDelete,
 }: ActionMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +68,7 @@ export default function ActionMenuToggle({
         <FaInfoCircle />
         개별 문서 보안리포트 확인
       </MenuItem>
-      <MenuItem className="action-menu-item" onClick={handleMenuItemClick}>
+      <MenuItem className="action-menu-item" onClick={onDelete}>
         <FaTrashAlt />
         삭제하기
       </MenuItem>
