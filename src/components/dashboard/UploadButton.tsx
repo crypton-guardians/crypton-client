@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-
 import apiClient from 'services/apiClient';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { getUserIdFromSession } from 'utils/sessionUtils';
 
 export default function UploadButton() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -14,7 +14,7 @@ export default function UploadButton() {
     }
   };
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     console.log('Selected file:', file);
 
@@ -33,17 +33,15 @@ export default function UploadButton() {
       }
 
       try {
+        const userId = getUserIdFromSession(); // 세션에서 사용자 ID 가져오기
+        if (!userId) {
+          alert('로그인이 필요합니다.');
+          return;
+        }
+
         const formData = new FormData();
         formData.append('file', file);
-
-        // sessionStorage에서 사용자 ID 가져오기
-        const uploadUserId = sessionStorage.getItem('userId');
-        if (uploadUserId) {
-          // uploadUserId를 Long 타입으로 변환 후 추가
-          formData.append('uploadUserId', String(uploadUserId));
-        } else {
-          throw new Error('사용자 ID를 찾을 수 없습니다.');
-        }
+        formData.append('uploadUserId', userId.toString());
 
         const response = await apiClient.post(`/document/upload`, formData, {
           headers: {
@@ -51,16 +49,19 @@ export default function UploadButton() {
           },
         });
 
-        if (response.status === 200) {
+        if (response.data.success) {
           console.log('파일 업로드 성공:', response.data.message);
+          // TODO: 업로드 성공 시 추가 처리 로직 (알림 또는 UI 업데이트)
         } else {
           console.error('파일 업로드 실패:', response.data.message);
+          alert('파일 업로드에 실패했습니다.');
         }
       } catch (error) {
         console.error('파일 업로드 중 오류 발생:', error);
+        alert('파일 업로드 중 오류가 발생했습니다.');
       }
     }
-  };
+  }, []);
 
   return (
     <>
