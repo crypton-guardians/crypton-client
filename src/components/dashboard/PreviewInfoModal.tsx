@@ -15,6 +15,7 @@ interface PreviewInfoModalProps {
   fileSize: string;
   fileOwner: string;
   onPreviewStart: () => void;
+  fileId: string;
 }
 
 export default function PreviewInfoModal({
@@ -25,6 +26,7 @@ export default function PreviewInfoModal({
   fileSize,
   fileOwner,
   onPreviewStart,
+  fileId,
 }: PreviewInfoModalProps) {
   const [showAdditionalContent, setShowAdditionalContent] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -87,7 +89,6 @@ export default function PreviewInfoModal({
         </ModalLayout>
       )}
 
-      {/* FullScreenPreview 모달 */}
       <FullScreenPreview
         isOpen={showPreview}
         onClose={handleFullScreenClose}
@@ -95,6 +96,7 @@ export default function PreviewInfoModal({
         fileDate={fileDate}
         fileSize={fileSize}
         fileOwner={fileOwner}
+        fileId={fileId}
       />
     </>
   );
