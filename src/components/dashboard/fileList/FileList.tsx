@@ -14,7 +14,7 @@ import { formatDateToYYMMDD } from 'utils/dateUtils';
 import { FaEllipsisH } from 'react-icons/fa';
 
 interface File {
-  key: string;
+  id: string;
   name: string;
   date: string;
   size: string;
@@ -64,8 +64,8 @@ export default function FileList() {
       });
 
       if (response.data.success) {
-        const formattedFiles = response.data.data.map((file: any, index: number) => ({
-          key: String(index), // 임시로 key 생성
+        const formattedFiles = response.data.data.map((file: any) => ({
+          id: file.documentId, // documentId를 id로 설정
           name: file.fileName,
           date: formatDateToYYMMDD(file.createdAt),
           size: file.fileSize,
@@ -168,9 +168,9 @@ export default function FileList() {
         <TableBody>
           {fileList.map((file) => (
             <TableRow
-              key={file.key}
+              key={file.id} // key를 id로 변경
               onClick={() => handleRowClick(file)}
-              isMenuOpen={menuState.isOpen && menuState.selectedRowKey === file.key}>
+              isMenuOpen={menuState.isOpen && menuState.selectedRowKey === file.id}>
               <TableCell>
                 <PdfIcon width="26px" height="26px" />
                 {file.name}
@@ -179,10 +179,10 @@ export default function FileList() {
               <TableCell>{file.size}</TableCell>
               <TableCell>{file.owner}</TableCell>
               <TableCell></TableCell>
-              <TableCell onClick={(event) => handleMenuToggle(event, file.key)}>
+              <TableCell onClick={(event) => handleMenuToggle(event, file.id)}>
                 <EllipsisContainer>
                   <FaEllipsisH />
-                  {menuState.isOpen && menuState.selectedRowKey === file.key && (
+                  {menuState.isOpen && menuState.selectedRowKey === file.id && (
                     <ActionMenuToggle
                       isOpen={menuState.isOpen}
                       onClose={handleMenuClose}
@@ -208,6 +208,7 @@ export default function FileList() {
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
           onPreviewStart={handlePreviewStart}
+          fileId={selectedFile.id} // fileId를 PreviewInfoModal에 전달
         />
       )}
 
@@ -219,6 +220,7 @@ export default function FileList() {
           fileDate={selectedFile.date}
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
+          fileId={selectedFile.id} // FullScreenPreview에도 fileId 전달
         />
       )}
 
@@ -236,7 +238,7 @@ export default function FileList() {
           isOpen={showSecurityReportModal}
           onClose={handleSecurityReportClose}
           fileName={selectedFile.name}
-          fileId={selectedFile.key}
+          fileId={selectedFile.id}
           accessRecords={[
             {
               userName: 'qwer12341',
@@ -265,7 +267,7 @@ export default function FileList() {
           isOpen={showDeleteConfirmModal}
           onClose={handleDeleteClose}
           fileName={selectedFile.name}
-          fileId={selectedFile.key}
+          fileId={selectedFile.id}
           onDeleteSuccess={handleDeleteSuccess}
         />
       )}

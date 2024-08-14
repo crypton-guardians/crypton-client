@@ -10,6 +10,7 @@ interface FullScreenPreviewProps {
   fileDate: string;
   fileSize: string;
   fileOwner: string;
+  fileId: string;
 }
 
 export default function FullScreenPreview({
@@ -19,11 +20,9 @@ export default function FullScreenPreview({
   fileDate,
   fileSize,
   fileOwner,
+  fileId,
 }: FullScreenPreviewProps) {
   if (!isOpen) return null;
-
-  // NOTE: fileId를 주는 api가 없음, 임시데이터
-  const fileId = 'example12345';
 
   return (
     <FullScreenOverlay onClick={onClose}>
