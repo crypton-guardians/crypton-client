@@ -39,7 +39,7 @@ function menuReducer(state: MenuState, action: MenuAction): MenuState {
   }
 }
 
-export default function FileList() {
+export default function MyFileList() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [showPreviewInfoModal, setShowPreviewInfoModal] = useState(false);

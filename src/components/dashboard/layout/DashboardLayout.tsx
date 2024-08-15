@@ -8,7 +8,7 @@ import { FaFolderOpen, FaTrashAlt } from 'react-icons/fa';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { IoIosWarning } from 'react-icons/io';
 import RecentFileCard from '../RecentFileCard';
-import FileList from '../fileList/FileList';
+import MyFileList from '../fileList/MyFileList';
 
 export default function DashboardLayout() {
   const [activeTab, setActiveTab] = useState('home');
@@ -27,7 +27,7 @@ export default function DashboardLayout() {
             </S.RecentFilesSection>
             <S.TabContent>파일 목록</S.TabContent>
             <S.TableContainer>
-              <FileList />
+              <MyFileList />
             </S.TableContainer>
           </>
         );
@@ -36,7 +36,7 @@ export default function DashboardLayout() {
           <>
             <S.TabContent>파일 목록</S.TabContent>
             <S.TableContainer>
-              <FileList />
+              <MyFileList />
             </S.TableContainer>
           </>
         );
