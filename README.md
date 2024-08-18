@@ -1,6 +1,6 @@
 # 📂 Crython-Guardians
 
-Blaybus MVP 구현 프로젝트 CRYTHON 1팀
+2024 Blaybus MVP 구현 프로젝트 CRYTHON 1팀
 
 ![image](https://github.com/user-attachments/assets/9c7a7995-ef6c-4bcf-820a-9ffce7eeee5a)
 
