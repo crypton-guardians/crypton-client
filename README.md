@@ -2,7 +2,7 @@
 
 2024 Blaybus MVP 구현 프로젝트 CRYTHON 1팀
 
-![image](https://github.com/user-attachments/assets/9c7a7995-ef6c-4bcf-820a-9ffce7eeee5a)
+<img width="1920" alt="banner (1)" src="https://github.com/user-attachments/assets/6eba3ce7-f516-441d-80dd-092e34e22ea3">
 
 </br>
 
