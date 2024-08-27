@@ -1,6 +1,6 @@
 # 📂 Crython-Guardians
 
-2024 Blaybus MVP 구현 프로젝트 CRYTHON 1팀
+**2024 Blaybus MVP 구현 프로젝트 CRYTHON 1팀**
 
 <img width="1920" alt="banner (1)" src="https://github.com/user-attachments/assets/6eba3ce7-f516-441d-80dd-092e34e22ea3">
 
@@ -21,6 +21,7 @@
 <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/Recoil-3578E5?style=flat-square&logo=Recoil&logoColor=white">&nbsp;
 <img src="https://img.shields.io/badge/emotion-609926?style=flat-square&logoColor=white"/>&nbsp;
 
 </br>
