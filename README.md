@@ -9,7 +9,7 @@
 ## 🔓 Digital document 보안 솔루션
 
 - 프로젝트 이름 : **CRYTHON**
-- 프로젝트 기간 : **2024.08.13 ~ 2024.08.13**
+- 프로젝트 기간 : **2024.08.03 ~ 2024.08.14**
 - 파일 다운로드, 뷰어, 목록 관리 등 유저가 파일에 접근하여 사용할 수 있는 프로세스
 
 </br>
@@ -17,7 +17,7 @@
 ### 🔧 기술 스택
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>&nbsp;
-<img src="https://img.shields.io/badge/TypeScript-F7DF1E?style=flat-square&logo=TypeScript&logoColor=white"/> &nbsp;
+<img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"/>&nbsp;
