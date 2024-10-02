@@ -1,8 +1,4 @@
-import apiClient from 'services/apiClient';
 import { useState, useReducer, useEffect } from 'react';
-import { FileResponse } from 'services/file/types';
-import { File } from '../../../types/file';
-import { formatDateToYYMMDD } from 'utils/dateUtils';
 import ActionMenuToggle from '../ActionMenuToggle';
 import FileListLayout from './FileListLayout';
 import PreviewInfoModal from '../PreviewInfoModal';
@@ -10,6 +6,7 @@ import FullScreenPreview from '../FullScreenPreview';
 import ShareManagementModal from '../ShareManagementModal';
 import SecurityReportModal from '../SecurityReportModal';
 import FileDeleteConfirmModal from '../FileDeleteConfirmModal';
+import { dataSource, FileData } from './FileListdataSource'; // 테스트 데이터
 
 interface MenuState {
   isOpen: boolean;
@@ -29,6 +26,14 @@ function menuReducer(state: MenuState, action: MenuAction): MenuState {
   }
 }
 
+interface File {
+  id: string;
+  name: string;
+  date: string;
+  size: string;
+  owner: string;
+}
+
 export default function MyFileList() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -37,33 +42,19 @@ export default function MyFileList() {
   const [showSecurityReportModal, setShowSecurityReportModal] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
 
-  const [fileList, setFileList] = useState<File[]>([]);
+  const [fileList, setFileList] = useState<File[]>([]); // File 타입으로 설정
   const [menuState, dispatchMenu] = useReducer(menuReducer, { isOpen: false, selectedRowKey: null });
 
-  const fetchFileList = async () => {
-    try {
-      const userId = sessionStorage.getItem('userId');
-      if (!userId) throw new Error('사용자 ID를 찾을 수 없습니다.');
-
-      const response = await apiClient.get(`/document/list`, { params: { userId } });
-
-      if (response.data.success) {
-        const formattedFiles = response.data.data.map(
-          (file: FileResponse): File => ({
-            id: file.documentId,
-            name: file.fileName,
-            date: formatDateToYYMMDD(file.createdAt),
-            size: file.fileSize,
-            owner: file.uploadUser,
-          }),
-        );
-        setFileList(formattedFiles);
-      } else {
-        console.error('파일 리스트를 가져오는데 실패했습니다:', response.data.message);
-      }
-    } catch (error) {
-      console.error('파일 리스트를 가져오는 중 오류 발생:', error);
-    }
+  // FileData를 File 타입으로 변환
+  const fetchFileList = () => {
+    const convertedFiles: File[] = dataSource.map((file: FileData) => ({
+      id: file.key, // key를 id로 변환
+      name: file.name,
+      date: file.date,
+      size: file.size,
+      owner: file.owner,
+    }));
+    setFileList(convertedFiles);
   };
 
   useEffect(() => {
@@ -163,6 +154,7 @@ export default function MyFileList() {
 
       {selectedFile && showPreviewInfoModal && (
         <PreviewInfoModal
+          fileId={''}
           isOpen={showPreviewInfoModal}
           onClose={handleClosePreviewInfoModal}
           fileName={selectedFile.name}
@@ -170,19 +162,18 @@ export default function MyFileList() {
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
           onPreviewStart={handlePreviewStart}
-          fileId={selectedFile.id}
         />
       )}
 
       {showPreview && selectedFile && (
         <FullScreenPreview
+          fileId={''}
           isOpen={showPreview}
           onClose={handleFullScreenClose}
           fileName={selectedFile.name}
           fileDate={selectedFile.date}
           fileSize={selectedFile.size}
           fileOwner={selectedFile.owner}
-          fileId={selectedFile.id}
         />
       )}
 
@@ -197,39 +188,20 @@ export default function MyFileList() {
 
       {showSecurityReportModal && selectedFile && (
         <SecurityReportModal
+          fileId={''}
           isOpen={showSecurityReportModal}
           onClose={handleSecurityReportClose}
           fileName={selectedFile.name}
-          fileId={selectedFile.id}
-          accessRecords={[
-            {
-              userName: 'qwer12341',
-              accessStatus: '허용되지 않은 사용자',
-              device: 'Mac OS',
-              accessTime: '2024-08-12 15:30:45',
-            },
-            {
-              userName: 'user868',
-              accessStatus: '',
-              device: 'Mac OS',
-              accessTime: '2024-08-12 15:30:45',
-            },
-            {
-              userName: 'user19999',
-              accessStatus: '허용되지 않은 사용자',
-              device: 'Android',
-              accessTime: '2024-08-12 15:30:45',
-            },
-          ]} // NOTE: 임시 데이터입니다.
+          accessRecords={[]}
         />
       )}
 
       {selectedFile && showDeleteConfirmModal && (
         <FileDeleteConfirmModal
+          fileId={''}
           isOpen={showDeleteConfirmModal}
           onClose={handleDeleteClose}
           fileName={selectedFile.name}
-          fileId={selectedFile.id}
           onDeleteSuccess={handleDeleteSuccess}
         />
       )}

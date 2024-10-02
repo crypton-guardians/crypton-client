@@ -126,7 +126,7 @@ export const Content = styled.div`
 
 export const TabContent = styled.div`
   ${({ theme }) => css`
-    position: sticky;
+    /* position: sticky; */
     top: 220px;
     height: 60px;
     padding: 20px;
