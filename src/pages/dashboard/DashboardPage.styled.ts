@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 // 기본적인 레이아웃 스타일
-export const Layout = styled.div`
+export const DashboadrLayout = styled.div`
   ${({ theme }) => css`
     display: flex;
     height: 100vh;

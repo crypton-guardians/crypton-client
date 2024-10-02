@@ -58,7 +58,7 @@ export default function DashboardLayout() {
   };
 
   return (
-    <S.Layout>
+    <S.DashboadrLayout>
       <S.Sidebar>
         <S.Logo src="/logo-custom.png" alt="Logo" />
         <S.SidebarTab active={activeTab === 'home'} onClick={() => setActiveTab('home')}>
@@ -83,6 +83,6 @@ export default function DashboardLayout() {
         </S.Header>
         <S.Content>{renderContent()}</S.Content>
       </S.MainContainer>
-    </S.Layout>
+    </S.DashboadrLayout>
   );
 }
