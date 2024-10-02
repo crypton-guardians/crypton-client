@@ -10,7 +10,7 @@ export const PageContainer = styled.div`
   padding: 20px;
   background-position: center;
   background-size: cover;
-  background-image: url('./background.webp');
+  background-image: url('/images/background.webp');
 `;
 
 export const ContentsContainer = styled.div`

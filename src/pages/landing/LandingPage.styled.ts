@@ -6,7 +6,7 @@ export const PageContainer = styled.div`
   height: 100vh;
   background-position: center;
   background-size: cover;
-  background-image: url('./background.webp');
+  background-image: url('/images/background.webp');
 `;
 
 export const Overlay = styled.div`
