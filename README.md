@@ -8,7 +8,7 @@
 
 ## 🔓 Digital document 보안 솔루션
 
-- 프로젝트 이름 : **CRYTHON**
+- 프로젝트 이름 : **CRYPTON**
 - 프로젝트 기간 : **2024.08.03 ~ 2024.08.14**
 - 파일 다운로드, 뷰어, 목록 관리 등 유저가 파일에 접근하여 사용할 수 있는 프로세스
 
@@ -32,6 +32,14 @@
 
 </br>
 
-### 💻 구현 내용
+### 💻 구현 내용 | 화면 구성
 
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/aa232bc6-4f81-42a5-8d66-658e2010f7b8">
+<img width="1096" alt="image" src="https://github.com/user-attachments/assets/aa232bc6-4f81-42a5-8d66-658e2010f7b8">
+
+<img width="1096" alt="스크린샷 2024-10-02 오후 9 37 01" src="https://github.com/user-attachments/assets/8537db15-39ff-4289-abf0-ee94bed1d188">
+
+<img width="1096" alt="스크린샷 2024-10-02 오후 9 37 04" src="https://github.com/user-attachments/assets/fa082217-45f5-4101-9875-6f2107ca0717">
+
+<img width="1096" alt="스크린샷 2024-10-02 오후 9 37 06" src="https://github.com/user-attachments/assets/b14b1e87-5507-4230-b6bf-8cbe0c2a48af">
+
+<img width="1096" alt="스크린샷 2024-10-02 오후 9 37 09" src="https://github.com/user-attachments/assets/29612723-cda3-42ab-88a0-5a49b32d8710">
