@@ -1,6 +1,6 @@
-# 📂 Crython-Guardians
+# 📂 Crypton-Guardians
 
-**2024 Blaybus MVP 구현 프로젝트 CRYTHON 1팀**
+**2024 Blaybus MVP 구현 프로젝트 CRYPTON 1팀**
 
 <img width="1920" alt="banner (1)" src="https://github.com/user-attachments/assets/6eba3ce7-f516-441d-80dd-092e34e22ea3">
 
